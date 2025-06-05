@@ -36,7 +36,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
                 />
                 <button
                     onClick={handleResetPassword}
-                    className="w-full p-3 bg-indigo-600 rounded text-white hover:bg-indigo-500"
+                    className="w-full p-3 bg-indigo-700 rounded text-white hover:bg-indigo-500"
                 >
                     Reset Password
                 </button>
