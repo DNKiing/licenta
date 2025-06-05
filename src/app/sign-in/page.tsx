@@ -1,7 +1,7 @@
 "use client";
 
 
-import {auth} from "@/app/firebase/firebase";
+import {auth} from "@/lib/firebase/firebase";
 import {signInWithEmailAndPassword} from "firebase/auth";
 
 import React, {useState} from "react";
@@ -16,7 +16,7 @@ const SignIn: React.FC<SignInProps> = () => {
 
     const handleSignIn = () => {
         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            // Signed in
+
             const user = userCredential.user;
             setEmail("")
             setPassword("")
@@ -55,6 +55,7 @@ const SignIn: React.FC<SignInProps> = () => {
                 >
                     Sign In
                 </button>
+                <p className="text-white mt-4"> Forgot your password? </p>
             </div>
         </div>
     );

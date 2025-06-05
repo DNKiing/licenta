@@ -2,7 +2,8 @@
 
 import React, {useState} from "react";
 import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
-import {auth} from "@/app/firebase/firebase";
+import {auth} from "@/lib/firebase/firebase";
+import Link from "next/link";
 
 
 type SignUpProps = {}
@@ -57,6 +58,9 @@ const SignUp: React.FC<SignUpProps> = () => {
                 >
                     Sign Up
                 </button>
+                <p className="text-white mt-4">Already have an account? <Link href="/sign-in"
+                                                                              className="text-blue-400  hover:text-blue-600 transition-colors duration-200"> Sign
+                    in</Link></p>
             </div>
         </div>
     );
