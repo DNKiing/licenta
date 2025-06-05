@@ -1,5 +1,8 @@
+"use client";
+import CodeEditor from "@/components/CodeEditor/CodeEditor";
+
 export default function Home() {
     return (
-        <h1>HOME PAGE</h1>
+        <CodeEditor/>
     )
 }
