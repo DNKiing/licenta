@@ -101,7 +101,7 @@ export default function ProfilePage() {
         <div>
             <Navbar/>
 
-            <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
+            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 ">
 
 
                 {/* Profile Content */}
