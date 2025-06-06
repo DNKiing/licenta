@@ -1,4 +1,3 @@
-// src/app/playground/[id]/PlaygroundClient.tsx
 'use client';
 import {useState, useEffect} from 'react';
 import dynamic from 'next/dynamic';
@@ -43,9 +42,9 @@ interface PlaygroundClientProps {
 
 const cleanTemplate = (template: string) => {
     return template
-        .replace(/\\n/g, '\n')  // Convert \n to actual newlines
-        .replace(/\\t/g, '\t')  // Convert \t to actual tabs
-        .trim();                // Remove extra whitespace
+        .replace(/\\n/g, '\n')
+        .replace(/\\t/g, '\t')
+        .trim();
 };
 
 const defaultCode = `#include <stdio.h>
@@ -86,7 +85,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             saveCodeToStorage(problem.id, code);
-        }, 1000); // Save after 1 second of no typing
+        }, 1000);
 
         return () => clearTimeout(timeoutId);
     }, [code, problem.id]);
@@ -96,7 +95,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setUser(user);
             if (user) {
-                // Check if problem is already solved
+
                 const progress = await getUserProgress(user.uid);
                 setIsSolved(progress.solved_problems.includes(problem.id));
             }
@@ -108,7 +107,6 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
     const handleEditorChange = (value: string | undefined) => {
         const newCode = value || '';
         setCode(newCode);
-        // Code will be auto-saved by useEffect above
     };
 
 
@@ -136,7 +134,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
             const data = await response.json();
             setResults(data.results || []);
 
-            // Check if all test cases passed
+
             const allPassed = data.results?.every((result: any) => result.passed);
 
             if (allPassed && user && !isSolved) {
@@ -144,9 +142,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
                 await markProblemAsSolved(user.uid, problem.id);
                 setIsSolved(true);
                 setShowSolvedMessage(true);
-                console.log('🎉 Problem solved!');
 
-                // Hide the solved message after 3 seconds
                 setTimeout(() => setShowSolvedMessage(false), 3000);
             }
 
@@ -167,9 +163,11 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
 
             {/* Right Side - Code Editor and Output */}
             <div className="w-2/3 flex flex-col bg-[#1d1d1d]">
+
                 {/* Top Right - Code Editor */}
                 <div className="h-2/3 border-b">
                     <div className="flex flex-col h-full">
+
                         {/* Editor Header */}
                         <div className="flex justify-between items-center p-3 bg-[#1d1d1d]">
                             <div className="flex items-center gap-3">
@@ -195,6 +193,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
                                 {isRunning ? 'Running...' : 'Run Code'}
                             </button>
                         </div>
+
 
                         {/* Solved Success Message */}
                         {showSolvedMessage && (
@@ -242,6 +241,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
 
                 {/* Bottom Right - Output/Results */}
                 <div className="h-1/3 flex flex-col bg-[#1d1d1d] text-white">
+
                     {/* Tab Headers */}
                     <div className="flex bg-[#1d1d1d]">
                         <button

@@ -1,4 +1,3 @@
-// src/app/problems/page.tsx
 'use client';
 import {useEffect, useState} from 'react';
 import {onAuthStateChanged, User} from 'firebase/auth';
@@ -50,12 +49,6 @@ export default function ProblemsPage() {
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        if (user) {
-            fetchProblems();
-        }
-    }, [user]);
-
     const fetchProblems = async () => {
         try {
             const problemsCollection = collection(db, 'problems');
@@ -69,6 +62,13 @@ export default function ProblemsPage() {
             console.error('Error fetching problems:', error);
         }
     };
+
+    useEffect(() => {
+        if (user) {
+            fetchProblems();
+        }
+    }, [user]);
+
 
     const isProblemSolved = (problemId: string) => {
         return userProgress.solved_problems.includes(problemId);
