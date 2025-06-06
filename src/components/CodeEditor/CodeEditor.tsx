@@ -61,7 +61,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     };
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-[#1d1d1d] ">
 
 
             <div className="flex-1 min-h-0">
@@ -80,7 +80,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                     }}
                 />
             </div>
-            <div className="flex justify-between items-center p-3 bg-gray-100 border-b">
+            <div className="flex justify-between items-center p-3 bg-[#1d1d1d] border-b">
                 <span className="text-sm font-medium text-gray-700">C Editor</span>
                 <button
                     onClick={handleRun}

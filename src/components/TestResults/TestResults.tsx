@@ -25,8 +25,8 @@ const TestResults: React.FC<TestResultsProps> = ({results, loading}) => {
     const totalCount = results.length;
 
     return (
-        <div className="p-4 h-full overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
+        <div className="p-4 h-full overflow-y-auto bg-[#1d1d1d]">
+            <div className="flex justify-between items-center mb-4 ">
                 <h3 className="font-semibold">Test Results</h3>
                 <span
                     className={`px-2 py-1 rounded text-sm ${passedCount === totalCount ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -36,7 +36,7 @@ const TestResults: React.FC<TestResultsProps> = ({results, loading}) => {
 
             {results.map((result, index) => (
                 <div key={index}
-                     className={`p-3 mb-3 rounded border-l-4 ${result.passed ? 'bg-green-50 border-green-400' : 'bg-red-50 border-red-400'}`}>
+                     className={`p-3 mb-3 rounded border-l-4 ${result.passed ? 'bg-[#3d3d3d] border-green-400' : 'bg-red-50 border-red-400'}`}>
                     <div className="flex items-center gap-2 mb-2">
             <span className={result.passed ? 'text-green-600' : 'text-red-600'}>
               {result.passed ? '✅' : '❌'}
@@ -47,19 +47,19 @@ const TestResults: React.FC<TestResultsProps> = ({results, loading}) => {
                     </div>
 
                     {!result.hidden && (
-                        <div className="space-y-2 text-sm">
+                        <div className="space-y-2 text-sm text-white">
                             <div>
-                                <span className="font-medium text-gray-600">Input:</span>
-                                <pre className="bg-gray-100 p-2 rounded mt-1 text-xs">{result.input}</pre>
+                                <span className="font-medium">Input:</span>
+                                <pre className="bg-[#1d1d1d] p-2 rounded mt-1 text-xs">{result.input}</pre>
                             </div>
                             <div>
-                                <span className="font-medium text-gray-600">Expected:</span>
-                                <pre className="bg-gray-100 p-2 rounded mt-1 text-xs">{result.expectedOutput}</pre>
+                                <span className="font-medium ">Expected:</span>
+                                <pre className="bg-[#1d1d1d] p-2 rounded mt-1 text-xs">{result.expectedOutput}</pre>
                             </div>
                             <div>
-                                <span className="font-medium text-gray-600">Got:</span>
+                                <span className="font-medium ">Got:</span>
                                 <pre
-                                    className={`p-2 rounded mt-1 text-xs ${result.passed ? 'bg-green-100' : 'bg-red-100'}`}>
+                                    className={`p-2 rounded mt-1 text-xs ${result.passed ? 'bg-green-700' : 'bg-[#1d1d1d]'}`}>
                   {result.actualOutput}
                 </pre>
                             </div>

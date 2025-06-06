@@ -3,9 +3,10 @@
 import {useEffect, useState} from 'react';
 import {onAuthStateChanged, User} from 'firebase/auth';
 import {auth, db} from '@/lib/firebase/firebase';
-import {useRouter} from 'next/navigation';
 import {collection, getDocs} from "firebase/firestore";
 import Link from "next/link";
+import SolvedBadge from '@/components/SolvedBadge/SolvedBadge';
+import {getUserProgress, UserProgress} from '@/lib/progressService/progressService';
 
 interface Problem {
     id: string;
@@ -31,11 +32,15 @@ export default function ProblemsPage() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [problems, setProblems] = useState<Problem[]>([]);
-    const router = useRouter();
+    const [userProgress, setUserProgress] = useState<UserProgress>({solved_problems: [], last_updated: new Date()});
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setUser(user);
+            if (user) {
+                const progress = await getUserProgress(user.uid);
+                setUserProgress(progress);
+            }
             setLoading(false);
         });
 
@@ -60,6 +65,10 @@ export default function ProblemsPage() {
         } catch (error) {
             console.error('Error fetching problems:', error);
         }
+    };
+
+    const isProblemSolved = (problemId: string) => {
+        return userProgress.solved_problems.includes(problemId);
     };
 
     if (loading) {
@@ -105,7 +114,9 @@ export default function ProblemsPage() {
             <div className="bg-white shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <h1 className="text-3xl font-bold text-gray-900">Practice Problems</h1>
-                    <p className="mt-2 text-gray-600">Sharpen your C programming skills</p>
+                    <p className="mt-2 text-gray-600">
+                        Sharpen your C programming skills • {userProgress.solved_problems.length} solved
+                    </p>
                 </div>
             </div>
 
@@ -129,7 +140,10 @@ export default function ProblemsPage() {
                                     <div className="flex items-center justify-between">
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3">
-                                                <h3 className="text-lg font-medium text-gray-900 hover:text-blue-600">
+                                                <SolvedBadge isSolved={isProblemSolved(problem.id)}/>
+                                                <h3 className={`text-lg font-medium hover:text-blue-600 ${
+                                                    isProblemSolved(problem.id) ? 'text-green-700' : 'text-gray-900'
+                                                }`}>
                                                     {problem.title}
                                                 </h3>
                                                 <span
