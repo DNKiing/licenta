@@ -1,4 +1,3 @@
-// src/app/api/execute/route.ts
 import {NextRequest, NextResponse} from 'next/server';
 
 export async function POST(request: NextRequest) {
@@ -10,11 +9,11 @@ export async function POST(request: NextRequest) {
         // Run code against each test case
         for (const testCase of testCases) {
             try {
-                // Encode code and input as base64
+
                 const encodedCode = Buffer.from(code).toString('base64');
                 const encodedInput = Buffer.from(testCase.input).toString('base64');
 
-                // Submit code to Judge0 with base64 encoding
+
                 const submitResponse = await fetch('https://judge0-ce.p.rapidapi.com/submissions', {
                     method: 'POST',
                     headers: {
@@ -61,10 +60,10 @@ export async function POST(request: NextRequest) {
                     continue;
                 }
 
-                // Wait for execution
+
                 await new Promise(resolve => setTimeout(resolve, 3000));
 
-                // Get result with base64 encoding
+
                 const resultResponse = await fetch(`https://judge0-ce.p.rapidapi.com/submissions/${token}?base64_encoded=true&fields=*`, {
                     headers: {
                         'X-RapidAPI-Key': process.env.RAPIDAPI_KEY!,
@@ -109,7 +108,7 @@ export async function POST(request: NextRequest) {
 
                 console.log('Parsed Judge0 result:', result);
 
-                // Handle the potential error from Judge0
+
                 if (result.error) {
                     results.push({
                         passed: false,
@@ -123,7 +122,7 @@ export async function POST(request: NextRequest) {
                     continue;
                 }
 
-                // Decode base64 outputs safely
+
                 let actualOutput = '';
                 let compilationError = '';
                 let runtimeError = '';
@@ -148,19 +147,14 @@ export async function POST(request: NextRequest) {
 
                 const expectedOutput = testCase.expectedOutput.trim();
 
-                // Build comprehensive error message
                 let errorMessage = '';
 
-                // Check for compilation errors first
+
                 if (compilationError) {
                     errorMessage = `Compilation Error:\n${compilationError}`;
-                }
-                // Then runtime errors
-                else if (runtimeError) {
+                } else if (runtimeError) {
                     errorMessage = `Runtime Error:\n${runtimeError}`;
-                }
-                // Then check status
-                else if (result.status && result.status.id && result.status.id !== 3) { // 3 = Accepted
+                } else if (result.status && result.status.id && result.status.id !== 3) { // 3 = Accepted
                     switch (result.status.id) {
                         case 6:
                             errorMessage = 'Compilation Error: Failed to compile the program';

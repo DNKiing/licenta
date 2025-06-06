@@ -81,7 +81,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
                 />
             </div>
             <div className="flex justify-between items-center p-3 bg-[#1d1d1d] border-b">
-                <span className="text-sm font-medium text-gray-700">C Editor</span>
                 <button
                     onClick={handleRun}
                     disabled={isRunning}
