@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import dynamic from 'next/dynamic';
 
-
 const Editor = dynamic(() => import('@monaco-editor/react'), {
     ssr: false,
     loading: () => (
@@ -14,79 +13,89 @@ const Editor = dynamic(() => import('@monaco-editor/react'), {
 
 interface CodeEditorProps {
     defaultCode?: string;
-    onChange?: (code: string) => void;
-    onRun?: (code: string) => void;
+    testCases?: any[];
+    onResults?: (results: any[]) => void;
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
                                                    defaultCode = '#include <stdio.h>\n\nint main() {\n    printf("Hello World");\n    return 0;\n}',
-                                                   onChange,
+                                                   testCases = [],
+                                                   onResults
                                                }) => {
     const [code, setCode] = useState(defaultCode);
+    const [isRunning, setIsRunning] = useState(false);
 
     const handleEditorChange = (value: string | undefined) => {
-        const newCode = value || '';
-        setCode(newCode);
-        onChange?.(newCode);
+        setCode(value || '');
     };
 
     const handleRun = async () => {
+        if (testCases.length === 0) {
+            console.log('No test cases provided');
+            return;
+        }
+
+        setIsRunning(true);
 
         try {
-            const res = await fetch("/api/execute", {
+            const response = await fetch('/api/execute', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({code}),
-            })
-            const data = await res.json();
+                body: JSON.stringify({
+                    code,
+                    testCases
+                }),
+            });
 
-            if (res.ok) {
-                alert("OUTPUT:\n" + data.output);
-                console.log("OUTPUT:\n" + data.output);
+            const data = await response.json();
+            onResults?.(data.results || []);
 
-            } else {
-                alert("Error:\n" + data.error);
-            }
         } catch (error) {
-            console.error("Error executing code:", error);
+            console.error('Error running code:', error);
+            onResults?.([]);
+        } finally {
+            setIsRunning(false);
         }
-
     };
 
     return (
-        <div className="h-screen w-screen flex flex-col">
+        <div className="flex flex-col h-full">
 
 
-            <Editor
-                height="100%"
-                defaultLanguage="c"
-                theme="vs-dark"
-                value={code}
-                onChange={handleEditorChange}
-                options={{
-                    minimap: {enabled: false},
-                    fontSize: 14,
-                    scrollBeyondLastLine: false,
-                    automaticLayout: true,
-                    wordWrap: 'on',
-                }}
-            />
-
-
-            <div className="flex-1">
-                <div className="flex justify-between items-center p-3 bg-gray-50 border-b">
-                    <span className="text-sm font-medium text-gray-700">C</span>
-                    <button
-                        onClick={handleRun}
-                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-medium"
-                    >
-                        Run Code
-                    </button>
-                </div>
+            <div className="flex-1 min-h-0">
+                <Editor
+                    height="100%"
+                    defaultLanguage="c"
+                    theme="vs-dark"
+                    value={code}
+                    onChange={handleEditorChange}
+                    options={{
+                        minimap: {enabled: false},
+                        fontSize: 14,
+                        scrollBeyondLastLine: false,
+                        automaticLayout: true,
+                        wordWrap: 'on',
+                    }}
+                />
+            </div>
+            <div className="flex justify-between items-center p-3 bg-gray-100 border-b">
+                <span className="text-sm font-medium text-gray-700">C Editor</span>
+                <button
+                    onClick={handleRun}
+                    disabled={isRunning}
+                    className={`px-4 py-2 rounded-md text-sm font-medium ${
+                        isRunning
+                            ? 'bg-gray-400 text-white cursor-not-allowed'
+                            : 'bg-green-600 text-white hover:bg-green-700'
+                    }`}
+                >
+                    {isRunning ? 'Running...' : 'Run Code'}
+                </button>
             </div>
         </div>
+
     );
 };
 

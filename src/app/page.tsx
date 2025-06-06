@@ -1,8 +1,10 @@
 "use client";
-import CodeEditor from "@/components/CodeEditor/CodeEditor";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function Home() {
     return (
-        <CodeEditor/>
+        <div className="h-screen w-screen">
+            <Navbar/>
+        </div>
     )
 }

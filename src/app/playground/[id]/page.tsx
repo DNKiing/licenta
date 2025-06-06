@@ -1,13 +1,26 @@
+// src/app/playground/[id]/page.tsx
 import {doc, getDoc} from "@firebase/firestore";
 import {db} from "@/lib/firebase/firebase";
 import {notFound} from 'next/navigation';
-import ProblemDescription from "@/components/ProblemDescription/ProblemDescription";
+import PlaygroundClient from '../PlaygroundClient';
 
 interface Problem {
     id: string;
     title: string;
     description: string;
     difficulty: 'easy' | 'medium' | 'hard';
+    examples?: Array<{
+        input: string;
+        output: string;
+        explanation?: string;
+    }>;
+    constraints?: string[];
+    template?: string;
+    testCases?: Array<{
+        input: string;
+        expectedOutput: string;
+        hidden: boolean;
+    }>;
 }
 
 async function getProblem(id: string): Promise<Problem | null> {
@@ -20,7 +33,7 @@ async function getProblem(id: string): Promise<Problem | null> {
     return null;
 }
 
-export default async function ProblemPage({params}: { params: Promise<{ id: string }> }) {
+export default async function PlaygroundPage({params}: { params: Promise<{ id: string }> }) {
     const {id} = await params;
     const problem = await getProblem(id);
 
@@ -28,8 +41,5 @@ export default async function ProblemPage({params}: { params: Promise<{ id: stri
         notFound();
     }
 
-    return <div className="bg-gray-100 min-h-screen p-6">
-        <ProblemDescription problem={problem}/>
-    </div>
-
+    return <PlaygroundClient problem={problem}/>;
 }
