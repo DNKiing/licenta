@@ -42,34 +42,36 @@ const Navbar = () => {
             router.push('/sign-in');
         }
     };
+
     const isActive = (path: string) => {
         return pathname === path || pathname.startsWith(path);
     };
 
-
     return (
-        <nav className="bg-[#1d1d1d] shadow-sm border-b border-gray-500">
+        <nav className="bg-gray-900/95 backdrop-blur-lg border-b border-gray-700/50 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link href="/" className="flex items-center">
-                            <div className="bg-blue-600 text-white pl-3 pr-1 py-2 rounded-4xl font-bold text-lg">
+                        <Link href="/" className="flex items-center group">
+                            <div
+                                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white pl-3 pr-1 py-2 rounded-lg font-bold text-lg group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300">
                                 C
                             </div>
-                            <span className="ml-0 text-xl font-bold text-white">odeMaster</span>
+                            <span
+                                className="ml-0 text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">odeMaster</span>
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden md:flex items-center space-x-1">
                         <Link
                             prefetch={true}
                             href="/"
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                                 pathname === '/'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-blue-600 hover:text-white hover:bg-blue-600'
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                             }`}
                         >
                             Home
@@ -78,10 +80,10 @@ const Navbar = () => {
                         <Link
                             prefetch={true}
                             href="/problems"
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                                 isActive('/problems') || isActive('/playground')
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-blue-600 hover:text-white hover:bg-blue-600'
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                             }`}
                         >
                             Problems
@@ -89,15 +91,14 @@ const Navbar = () => {
 
                         <Link
                             href="/learn"
-                            className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                                 isActive('/learn')
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-blue-600 hover:text-white hover:bg-blue-600'
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                             }`}
                         >
                             Learn
                         </Link>
-
                     </div>
 
                     {/* Auth Buttons / User Profile */}
@@ -105,43 +106,52 @@ const Navbar = () => {
                         {isLoggedIn ? (
                             <div className="relative">
                                 <div
-                                    className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-medium text-sm cursor-pointer hover:bg-blue-700 transition-colors"
+                                    className="w-10 h-10 rounded-full overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-blue-500 to-purple-600 p-0.5"
                                     onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                                 >
-
                                     <Image
                                         src="/profile.jpg"
                                         alt="Profile"
-                                        width={32}
-                                        height={32}
-                                        className="rounded-full"
+                                        width={40}
+                                        height={40}
+                                        className="rounded-full w-full h-full object-cover"
                                     />
                                 </div>
 
                                 {/* Dropdown Menu */}
                                 {isProfileDropdownOpen && (
                                     <div
-                                        className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
-                                        <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
-                                            <div className="font-medium">Profile Menu</div>
+                                        className="absolute right-0 mt-3 w-52 bg-gray-800/95 backdrop-blur-lg rounded-xl shadow-2xl py-2 z-50 border border-gray-700/50">
+                                        <div className="px-4 py-3 border-b border-gray-700/50">
+                                            <div className="font-medium text-white text-sm">Profile Menu</div>
+                                            <div className="text-gray-400 text-xs mt-0.5">{user?.email}</div>
                                         </div>
                                         <Link
                                             href="/profile"
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            className="flex items-center px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-200"
                                             onClick={() => setIsProfileDropdownOpen(false)}
                                         >
+                                            <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor"
+                                                 viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
                                             View Profile
                                         </Link>
-                                        
+
                                         <button
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
-                                                alert('Sign Out button clicked!'); // Debug log
                                                 handleLogout();
                                             }}
-                                            className="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                                            className="flex items-center w-full text-left px-4 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors duration-200"
                                         >
+                                            <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor"
+                                                 viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                            </svg>
                                             Sign Out
                                         </button>
                                     </div>
@@ -151,13 +161,13 @@ const Navbar = () => {
                             <>
                                 <Link
                                     href="/sign-in"
-                                    className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                                    className="text-gray-300 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300"
                                 >
                                     Sign In
                                 </Link>
                                 <Link
                                     href="/sign-up"
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
                                 >
                                     Sign Up
                                 </Link>
@@ -169,7 +179,7 @@ const Navbar = () => {
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900"
+                            className="text-gray-300 hover:text-white focus:outline-none transition-colors duration-300"
                         >
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 {isMenuOpen ? (
@@ -187,13 +197,14 @@ const Navbar = () => {
                 {/* Mobile menu */}
                 {isMenuOpen && (
                     <div className="md:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 rounded-md">
+                        <div
+                            className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800/50 backdrop-blur-lg rounded-lg mt-2 border border-gray-700/50">
                             <Link
                                 href="/"
-                                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                                className={`block px-3 py-3 rounded-lg text-base font-medium transition-colors duration-300 ${
                                     pathname === '/'
-                                        ? 'bg-blue-100 text-blue-700'
-                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                 }`}
                                 onClick={() => setIsMenuOpen(false)}
                             >
@@ -202,10 +213,10 @@ const Navbar = () => {
 
                             <Link
                                 href="/problems"
-                                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                                className={`block px-3 py-3 rounded-lg text-base font-medium transition-colors duration-300 ${
                                     isActive('/problems') || isActive('/playground')
-                                        ? 'bg-blue-100 text-blue-700'
-                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                 }`}
                                 onClick={() => setIsMenuOpen(false)}
                             >
@@ -214,62 +225,58 @@ const Navbar = () => {
 
                             <Link
                                 href="/learn"
-                                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                                className={`block px-3 py-3 rounded-lg text-base font-medium transition-colors duration-300 ${
                                     isActive('/learn')
-                                        ? 'bg-blue-100 text-blue-700'
-                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                                        : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                                 }`}
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Learn
                             </Link>
 
-                            <Link
-                                href="/quiz"
-                                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                                    isActive('/quiz')
-                                        ? 'bg-blue-100 text-blue-700'
-                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                                }`}
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Quiz
-                            </Link>
-
-                            <div className="border-t border-gray-200 pt-3 mt-3">
+                            <div className="border-t border-gray-700/50 pt-3 mt-3">
                                 {isLoggedIn ? (
                                     <div className="space-y-2">
                                         <div className="flex items-center px-3 py-2">
                                             <div
-                                                className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-medium text-sm mr-3">
-                                                P
+                                                className="w-8 h-8 rounded-full overflow-hidden mr-3 bg-gradient-to-r from-blue-500 to-purple-600 p-0.5">
+                                                <Image
+                                                    src="/profile.jpg"
+                                                    alt="Profile"
+                                                    width={32}
+                                                    height={32}
+                                                    className="rounded-full w-full h-full object-cover"
+                                                />
                                             </div>
-                                            <span className="text-gray-900 font-medium">Profile</span>
+                                            <span className="text-white font-medium">Profile</span>
                                         </div>
                                         <Link
                                             href="/profile"
-                                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            className="flex items-center px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-300"
                                             onClick={() => setIsMenuOpen(false)}
                                         >
+                                            <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor"
+                                                 viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
                                             View Profile
-                                        </Link>
-                                        <Link
-                                            href="/settings"
-                                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                                            onClick={() => setIsMenuOpen(false)}
-                                        >
-                                            Settings
                                         </Link>
                                         <button
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
-                                                console.log('Mobile Sign Out button clicked!'); // Debug log
                                                 handleLogout();
                                                 setIsMenuOpen(false);
                                             }}
-                                            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-700 hover:bg-red-50"
+                                            className="flex items-center w-full text-left px-3 py-2 rounded-lg text-base font-medium text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors duration-300"
                                         >
+                                            <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor"
+                                                 viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                            </svg>
                                             Sign Out
                                         </button>
                                     </div>
@@ -277,14 +284,14 @@ const Navbar = () => {
                                     <>
                                         <Link
                                             href="/sign-in"
-                                            className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                                            className="block px-3 py-3 rounded-lg text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors duration-300"
                                             onClick={() => setIsMenuOpen(false)}
                                         >
                                             Sign In
                                         </Link>
                                         <Link
                                             href="/sign-up"
-                                            className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 mt-2"
+                                            className="block px-3 py-3 rounded-lg text-base font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 mt-2 transition-all duration-300"
                                             onClick={() => setIsMenuOpen(false)}
                                         >
                                             Sign Up
