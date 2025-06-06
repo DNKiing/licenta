@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
 import {auth} from "@/lib/firebase/firebase";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 
 type SignUpProps = {}
@@ -19,13 +20,15 @@ const SignUp: React.FC<SignUpProps> = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
+    const router = useRouter()
+
     const handleSignUp = async () => {
         try {
             const newUser = await createUserWithEmailAndPassword(email, password)
             console.log("new User:", newUser)
             setEmail("")
             setPassword("")
-
+            router.push("/problems")
 
         } catch (error) {
             console.error("Error signing up:", error);
@@ -35,8 +38,8 @@ const SignUp: React.FC<SignUpProps> = () => {
 
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-            <div className="bg-gray-800 p-10 rounded-lg shadow-xl w-96">
+        <div className="min-h-screen flex items-center justify-center bg-[#1e1e1e]">
+            <div className="bg-gradient-to-br from-blue-500 to-purple-600  p-10 rounded-lg shadow-xl w-96">
                 <h1 className="text-white text-2xl mb-5">Sign Up</h1>
                 <input
                     type="email"

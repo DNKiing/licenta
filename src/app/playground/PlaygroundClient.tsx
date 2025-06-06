@@ -171,22 +171,16 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
                 <div className="h-2/3 border-b">
                     <div className="flex flex-col h-full">
                         {/* Editor Header */}
-                        <div className="flex justify-between items-center p-3 bg-[#1d1d1d] border-b">
+                        <div className="flex justify-between items-center p-3 bg-[#1d1d1d]">
                             <div className="flex items-center gap-3">
-                                <span className="text-sm font-medium text-white">C COMPILER</span>
+
                                 <div className="flex items-center gap-2">
                                     <SolvedBadge isSolved={isSolved} size="sm"/>
                                     <span
                                         className={`text-xs font-medium ${isSolved ? 'text-green-700' : 'text-gray-500'}`}>
                                         {problem.title}
                                     </span>
-                                    <span
-                                        className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getDifficultyColor(
-                                            problem.difficulty
-                                        )}`}
-                                    >
-                                        {problem.difficulty}
-                                    </span>
+
                                 </div>
                             </div>
                             <button

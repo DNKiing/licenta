@@ -22,11 +22,11 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
     const getDifficultyColor = (difficulty: string) => {
         switch (difficulty) {
             case 'easy':
-                return 'text-green-600 bg-green-100';
+                return 'text-green-500 bg-green-900';
             case 'medium':
-                return 'text-yellow-600 bg-yellow-100';
+                return 'text-yellow-400 bg-yellow-900';
             case 'hard':
-                return 'text-red-600 bg-red-100';
+                return 'text-red-300 bg-red-900';
             default:
                 return 'text-gray-600 bg-gray-100';
         }
@@ -70,8 +70,8 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
                             {/* Input */}
                             <div className="mb-3">
                                 <span className="text-sm font-medium">Input:</span>
-                                <div className="mt-1 p-3 bg-gray-50 rounded-md border">
-                                    <code className="text-sm font-mono text-gray-800">
+                                <div className="mt-1 p-3 bg-gray-800 rounded-md border">
+                                    <code className="text-sm font-mono text-gwhite">
                                         {example.input}
                                     </code>
                                 </div>
@@ -80,8 +80,8 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
                             {/* Output */}
                             <div className="mb-3">
                                 <span className="text-sm font-medium ">Output:</span>
-                                <div className="mt-1 p-3 bg-gray-50 rounded-md border">
-                                    <code className="text-sm font-mono text-gray-800">
+                                <div className="mt-1 p-3 bg-gray-800  rounded-md border">
+                                    <code className="text-sm font-mono text-white">
                                         {example.output}
                                     </code>
                                 </div>
@@ -91,7 +91,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
                             {example.explanation && (
                                 <div className="mb-3">
                                     <span className="text-sm font-medium ">Explanation:</span>
-                                    <p className="mt-1 p-3 bg-gray-50 text-black rounded-md border leading-relaxed">
+                                    <p className="mt-1 p-3 bg-gray-800  text-white rounded-md border leading-relaxed">
                                         {example.explanation}
                                     </p>
                                 </div>
@@ -108,9 +108,8 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
                     <ul className="space-y-3">
                         {problem.constraints.map((constraint, index) => (
                             <li key={index} className="flex items-start gap-3">
-                                <span className="text-gray-400 mt-3 text-lg leading-none">•</span>
-                                <div className="flex-1 p-3 bg-gray-50 rounded-md border">
-                                    <code className="text-sm font-mono text-gray-800">
+                                <div className="flex-1 p-3 bg-gray-800  rounded-md border">
+                                    <code className="text-sm font-mono text-white">
                                         {cleanText(constraint)}
                                     </code>
                                 </div>
@@ -119,7 +118,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
                     </ul>
                 </div>
             )}
-            <div>Only one valid answer exists.</div>
+
         </div>
     );
 };

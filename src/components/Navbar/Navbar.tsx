@@ -55,27 +55,15 @@ const Navbar = () => {
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center group">
                             <div
-                                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white pl-3 pr-1 py-2 rounded-lg font-bold text-lg group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300">
-                                C
+                                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 py-1 rounded-lg font-bold text-lg group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300">
+                                CodeMaster
                             </div>
-                            <span
-                                className="ml-0 text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">odeMaster</span>
+
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-1">
-                        <Link
-                            prefetch={true}
-                            href="/"
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                                pathname === '/'
-                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                            }`}
-                        >
-                            Home
-                        </Link>
 
                         <Link
                             prefetch={true}

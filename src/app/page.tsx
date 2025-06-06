@@ -60,7 +60,7 @@ export default function LandingPage() {
                         {/* Stats */}
                         <div className="flex gap-8 pt-8">
                             <div className="text-center">
-                                <div className="text-3xl font-bold text-blue-400">50+</div>
+                                <div className="text-3xl font-bold text-blue-400">5+</div>
                                 <div className="text-gray-400">Problems</div>
                             </div>
                             <div className="text-center">
