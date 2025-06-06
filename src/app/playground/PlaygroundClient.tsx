@@ -7,6 +7,8 @@ import ProblemDescription from '@/components/ProblemDescription/ProblemDescripti
 import TestResults from '@/components/TestResults/TestResults';
 import {markProblemAsSolved, getUserProgress} from '@/lib/progressService/progressService';
 import SolvedBadge from '@/components/SolvedBadge/SolvedBadge';
+import Problem from "@/utils/Problem";
+
 
 const Editor = dynamic(() => import('@monaco-editor/react'), {
     ssr: false,
@@ -17,24 +19,6 @@ const Editor = dynamic(() => import('@monaco-editor/react'), {
     ),
 });
 
-interface Problem {
-    id: string;
-    title: string;
-    description: string;
-    difficulty: 'easy' | 'medium' | 'hard';
-    examples?: Array<{
-        input: string;
-        output: string;
-        explanation?: string;
-    }>;
-    constraints?: string[];
-    template?: string;
-    testCases?: Array<{
-        input: string;
-        expectedOutput: string;
-        hidden: boolean;
-    }>;
-}
 
 interface PlaygroundClientProps {
     problem: Problem;
@@ -54,18 +38,6 @@ int main() {
     return 0;
 }`;
 
-const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-        case 'easy':
-            return 'text-green-600 bg-green-100';
-        case 'medium':
-            return 'text-yellow-600 bg-yellow-100';
-        case 'hard':
-            return 'text-red-600 bg-red-100';
-        default:
-            return 'text-gray-600 bg-gray-100';
-    }
-};
 
 export default function PlaygroundClient({problem}: PlaygroundClientProps) {
     const [code, setCode] = useState(() => {
@@ -81,6 +53,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
     const [user, setUser] = useState<User | null>(null);
     const [isSolved, setIsSolved] = useState(false);
     const [showSolvedMessage, setShowSolvedMessage] = useState(false);
+
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -103,6 +76,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
 
         return () => unsubscribe();
     }, [problem.id]);
+
 
     const handleEditorChange = (value: string | undefined) => {
         const newCode = value || '';
@@ -156,6 +130,7 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
 
     return (
         <div className="h-screen flex bg-[#1d1d1d] text-white">
+
             {/* Left Side - Problem Description */}
             <div className="w-1/2 bg-[#1d1d1d] border-r">
                 <ProblemDescription problem={problem}/>

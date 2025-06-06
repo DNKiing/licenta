@@ -3,25 +3,7 @@ import {doc, getDoc} from "@firebase/firestore";
 import {db} from "@/lib/firebase/firebase";
 import {notFound} from 'next/navigation';
 import PlaygroundClient from '../PlaygroundClient';
-
-interface Problem {
-    id: string;
-    title: string;
-    description: string;
-    difficulty: 'easy' | 'medium' | 'hard';
-    examples?: Array<{
-        input: string;
-        output: string;
-        explanation?: string;
-    }>;
-    constraints?: string[];
-    template?: string;
-    testCases?: Array<{
-        input: string;
-        expectedOutput: string;
-        hidden: boolean;
-    }>;
-}
+import Problem from "@/utils/Problem";
 
 async function getProblem(id: string): Promise<Problem | null> {
     const docRef = doc(db, "problems", id);
