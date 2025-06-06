@@ -101,7 +101,7 @@ export default function ProfilePage() {
         <div>
             <Navbar/>
 
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
 
 
                 {/* Profile Content */}
@@ -109,7 +109,7 @@ export default function ProfilePage() {
                     <div className="space-y-6">
 
                         {/* Profile Header Card */}
-                        <div className="bg-white rounded-lg shadow p-6">
+                        <div className="bg-gray-900/95 backdrop-blur-lg rounded-lg shadow p-6 ">
                             <div className="flex items-center space-x-6">
                                 <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center">
                 <span className="text-2xl font-bold text-white">
@@ -117,11 +117,11 @@ export default function ProfilePage() {
                 </span>
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-gray-900">
+                                    <h2 className="text-2xl font-bold text-white">
                                         {user.displayName || user.email?.split('@')[0] || 'User'}
                                     </h2>
-                                    <p className="text-gray-600">{user.email}</p>
-                                    <p className="text-sm text-gray-500 mt-1">
+                                    <p className="text-gray-300">{user.email}</p>
+                                    <p className="text-sm text-gray-300 mt-1">
                                         Member since {formatDate(new Date(user.metadata.creationTime || ''))}
                                     </p>
                                 </div>
@@ -129,28 +129,28 @@ export default function ProfilePage() {
                         </div>
 
                         {/* Stats Card */}
-                        <div className="bg-white rounded-lg shadow p-6">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Statistics</h3>
+                        <div className="bg-gray-900/95 backdrop-blur-lg rounded-lg shadow p-6">
+                            <h3 className="text-lg font-semibold text-white mb-4 text-center">Statistics</h3>
                             <div className="flex justify-center">
                                 <div className="text-center">
                                     <div className="text-3xl font-bold text-blue-600">
                                         {userProgress.solved_problems.length}
                                     </div>
-                                    <div className="text-sm text-gray-600">Problems Solved</div>
+                                    <div className="text-sm text-gray-300">Problems Solved</div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Account Information */}
-                        <div className="bg-white rounded-lg shadow p-6">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Information</h3>
+                        <div className="bg-gray-900/95 backdrop-blur-lg rounded-lg shadow p-6">
+                            <h3 className="text-lg font-semibold text-white mb-4">Account Information</h3>
                             <div className="space-y-4">
 
                                 {/* Email */}
                                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
                                     <div>
-                                        <label className="text-sm font-medium text-gray-700">Email Address</label>
-                                        <p className="text-gray-900">{user.email}</p>
+                                        <label className="text-sm font-medium text-white">Email Address</label>
+                                        <p className="text-gray-300">{user.email}</p>
                                     </div>
 
                                 </div>
@@ -158,8 +158,8 @@ export default function ProfilePage() {
                                 {/* Display Name */}
                                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
                                     <div>
-                                        <label className="text-sm font-medium text-gray-700">Full Name</label>
-                                        <p className="text-gray-900">{user.displayName || user.email?.split('@')[0] || 'Not set'}</p>
+                                        <label className="text-sm font-medium text-white">Full Name</label>
+                                        <p className="text-gray-300">{user.displayName || user.email?.split('@')[0] || 'Not set'}</p>
                                     </div>
 
                                 </div>
@@ -168,8 +168,8 @@ export default function ProfilePage() {
                                 {/* Account Created */}
                                 <div className="flex justify-between items-center py-3">
                                     <div>
-                                        <label className="text-sm font-medium text-gray-700">Account Created</label>
-                                        <p className="text-gray-900">
+                                        <label className="text-sm font-medium text-white">Account Created</label>
+                                        <p className="text-gray-300">
                                             {formatDate(new Date(user.metadata.creationTime || ''))}
                                         </p>
                                     </div>
