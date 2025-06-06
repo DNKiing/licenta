@@ -287,14 +287,13 @@ export default function PlaygroundClient({problem}: PlaygroundClientProps) {
                             <TestResults results={results} loading={isRunning}/>
                         ) : (
                             <div className="h-full p-4 bg-[#1d1d1d] text-green-400 font-mono text-sm overflow-y-auto">
-                                <div className="mb-2 text-white">Console Output:</div>
+
                                 {results.length > 0 ? (
                                     <div className="space-y-3">
                                         {results.map((result: any, index: number) => (
                                             <div key={index} className="border-b border-gray-700 pb-2 last:border-b-0">
-                                                <div className="text-blue-400 mb-1">Test Case {index + 1}:</div>
 
-                                                {/* Show errors with better formatting */}
+
                                                 {result.error ? (
                                                     <div
                                                         className="text-red-400 whitespace-pre-wrap font-mono bg-red-900/20 p-3 rounded border-l-4 border-red-500">

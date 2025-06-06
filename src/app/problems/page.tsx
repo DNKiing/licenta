@@ -7,6 +7,9 @@ import {collection, getDocs} from "firebase/firestore";
 import Link from "next/link";
 import SolvedBadge from '@/components/SolvedBadge/SolvedBadge';
 import {getUserProgress, UserProgress} from '@/lib/progressService/progressService';
+import {cleanText} from "@/components/ProblemDescription/ProblemDescription";
+import Navbar from "@/components/Navbar/Navbar";
+import PageTransition from "@/components/PageTransition/PageTransition";
 
 interface Problem {
     id: string;
@@ -109,85 +112,81 @@ export default function ProblemsPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <div className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <h1 className="text-3xl font-bold text-gray-900">Practice Problems</h1>
-                    <p className="mt-2 text-gray-600">
-                        Sharpen your C programming skills • {userProgress.solved_problems.length} solved
-                    </p>
-                </div>
-            </div>
+        <PageTransition>
+            <div className="min-h-screen bg-[#1e1e1e]">
+                <Navbar/>
 
-            {/* Problems List */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <div className="px-6 py-4 border-b border-gray-200">
-                        <h2 className="text-lg font-semibold text-gray-900">
-                            All Problems ({problems.length})
-                        </h2>
-                    </div>
 
-                    <div className="divide-y divide-gray-200">
-                        {problems.map((problem) => (
-                            <Link
-                                key={problem.id}
-                                href={`/playground/${problem.id}`}
-                                className="block hover:bg-gray-50 transition-colors duration-150"
-                            >
-                                <div className="px-6 py-4">
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3">
-                                                <SolvedBadge isSolved={isProblemSolved(problem.id)}/>
-                                                <h3 className={`text-lg font-medium hover:text-blue-600 ${
-                                                    isProblemSolved(problem.id) ? 'text-green-700' : 'text-gray-900'
-                                                }`}>
-                                                    {problem.title}
-                                                </h3>
-                                                <span
-                                                    className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getDifficultyColor(
-                                                        problem.difficulty
-                                                    )}`}
-                                                >
+                {/* Problems List */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                        <div className="px-6 py-4 border-b border-gray-200">
+                            <h2 className="text-lg font-semibold text-gray-900 uppercase text-center    ">
+                                All Problems ({problems.length})
+                             
+                            </h2>
+                        </div>
+
+                        <div className="divide-y divide-gray-200">
+                            {problems.map((problem) => (
+                                <Link
+                                    key={problem.id}
+                                    href={`/playground/${problem.id}`}
+                                    className="block hover:bg-gray-50 transition-colors duration-150"
+                                >
+                                    <div className="px-6 py-4">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-3">
+                                                    <SolvedBadge isSolved={isProblemSolved(problem.id)}/>
+                                                    <h3 className={`text-lg font-medium hover:text-blue-600 ${
+                                                        isProblemSolved(problem.id) ? 'text-green-700' : 'text-gray-900'
+                                                    }`}>
+                                                        {problem.title}
+                                                    </h3>
+                                                    <span
+                                                        className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getDifficultyColor(
+                                                            problem.difficulty
+                                                        )}`}
+                                                    >
                                                     {problem.difficulty}
                                                 </span>
+                                                </div>
+                                                <p className="mt-1 text-sm text-gray-600 line-clamp-2">
+                                                    {cleanText(problem.description)}
+                                                </p>
                                             </div>
-                                            <p className="mt-1 text-sm text-gray-600 line-clamp-2">
-                                                {problem.description.split('\n')[0]}
-                                            </p>
-                                        </div>
 
-                                        <div className="ml-4">
-                                            <svg
-                                                className="w-5 h-5 text-gray-400"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M9 5l7 7-7 7"
-                                                />
-                                            </svg>
+                                            <div className="ml-4">
+                                                <svg
+                                                    className="w-5 h-5 text-gray-400"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M9 5l7 7-7 7"
+                                                    />
+                                                </svg>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
-                </div>
 
-                {problems.length === 0 && (
-                    <div className="text-center py-12">
-                        <div className="text-gray-400 text-lg">No problems available yet</div>
-                        <p className="text-gray-500 mt-2">Check back soon for new challenges!</p>
-                    </div>
-                )}
+                    {problems.length === 0 && (
+                        <div className="text-center py-12">
+                            <div className="text-gray-400 text-lg">No problems available yet</div>
+                            <p className="text-gray-500 mt-2">Check back soon for new challenges!</p>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </PageTransition>
     );
 }

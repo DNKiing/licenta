@@ -126,7 +126,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({problem}) => {
 
 export default ProblemDescription;
 
-const cleanText = (text: string) => {
+export const cleanText = (text: string) => {
     return text
         .replace(/\\n/g, '\n')
         .replace(/\\t/g, '\t')
