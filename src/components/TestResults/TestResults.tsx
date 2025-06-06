@@ -1,3 +1,5 @@
+import React from "react";
+
 interface TestResult {
     passed: boolean;
     input: string;
@@ -36,7 +38,7 @@ const TestResults: React.FC<TestResultsProps> = ({results, loading}) => {
 
             {results.map((result, index) => (
                 <div key={index}
-                     className={`p-3 mb-3 rounded border-l-4 ${result.passed ? 'bg-[#3d3d3d] border-green-400' : 'bg-red-50 border-red-400'}`}>
+                     className={`p-3 mb-3 rounded border-l-4 ${result.passed ? 'bg-[#3d3d3d] border-green-400' : 'bg-[#1d1d1d] border-red-400'}`}>
                     <div className="flex items-center gap-2 mb-2">
             <span className={result.passed ? 'text-green-600' : 'text-red-600'}>
               {result.passed ? '✅' : '❌'}
@@ -59,7 +61,7 @@ const TestResults: React.FC<TestResultsProps> = ({results, loading}) => {
                             <div>
                                 <span className="font-medium ">Got:</span>
                                 <pre
-                                    className={`p-2 rounded mt-1 text-xs ${result.passed ? 'bg-green-700' : 'bg-[#1d1d1d]'}`}>
+                                    className={`p-2 rounded mt-1 text-white text-xs ${result.passed ? 'bg-green-700' : 'bg-[#1d1d1d]'}`}>
                   {result.actualOutput}
                 </pre>
                             </div>
@@ -68,8 +70,8 @@ const TestResults: React.FC<TestResultsProps> = ({results, loading}) => {
 
                     {result.error && (
                         <div className="mt-2">
-                            <span className="font-medium text-red-600">Error:</span>
-                            <pre className="bg-red-100 p-2 rounded mt-1 text-xs text-red-800">{result.error}</pre>
+                            <span className="font-medium text-white">Error:</span>
+                            <pre className="bg-[#1e1e1e] p-2 rounded mt-1 text-xs text-white">{result.error}</pre>
                         </div>
                     )}
                 </div>
