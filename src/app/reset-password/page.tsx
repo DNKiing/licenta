@@ -7,7 +7,7 @@ type ResetPasswordProps = {}
 
 const ResetPassword: React.FC<ResetPasswordProps> = () => {
     const [email, setEmail] = useState('');
-    const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
     const handleResetPassword = async () => {
         if (!email) {
@@ -17,6 +17,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
         try {
             const res = await sendPasswordResetEmail(email)
             alert("Password reset email sent")
+            console.log("Password reset email sent successfully:", res);
         } catch (error) {
             console.error("Error sending password reset email:", error);
             alert("Failed to send password reset email. Please try again.");
