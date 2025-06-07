@@ -2,6 +2,8 @@
 import {useSendPasswordResetEmail} from 'react-firebase-hooks/auth';
 import React, {useState} from "react";
 import {auth} from "@/lib/firebase/firebase";
+import {Bounce, toast, ToastContainer} from "react-toastify";
+import {useRouter} from "next/navigation";
 
 type ResetPasswordProps = {}
 
@@ -9,24 +11,33 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
     const [email, setEmail] = useState('');
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
+    const router = useRouter();
     const handleResetPassword = async () => {
+        const notify = (string: String) => toast(string, {
+            position: "top-center",
+            autoClose: 3000,
+            theme: "dark",
+        })
         if (!email) {
             alert("Please enter your email address");
             return;
         }
         try {
             const res = await sendPasswordResetEmail(email)
-            alert("Password reset email sent")
+            notify("Password reset email sent successfully!");
+            setTimeout(() => (router.push('/')), 3500);
+
+
             console.log("Password reset email sent successfully:", res);
         } catch (error) {
             console.error("Error sending password reset email:", error);
-            alert("Failed to send password reset email. Please try again.");
+            notify("Failed to send password reset email. Please try again.");
         }
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-            <div className="bg-gray-800 p-10 rounded-lg shadow-xl w-96">
+        <div className="min-h-screen flex items-center justify-center bg-[#1e1e1e]">
+            <div className=" bg-gradient-to-br from-blue-500 to-purple-600 p-10 rounded-lg shadow-xl w-96">
                 <h1 className="text-white text-2xl mb-5">Reset Password</h1>
                 <input
                     type="email"
@@ -41,6 +52,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
                 >
                     Reset Password
                 </button>
+                <ToastContainer/>
             </div>
         </div>
     )
