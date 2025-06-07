@@ -21,7 +21,7 @@ const SignIn: React.FC<SignInProps> = () => {
             const user = userCredential.user;
             setEmail("")
             setPassword("")
-            router.push("/");
+            router.push("/problems");
             console.log("User signed in:", user);
         }).catch((error) => {
             alert("Invalid email or password");
