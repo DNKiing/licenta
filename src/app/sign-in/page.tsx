@@ -7,6 +7,8 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import notify from "@/components/Toastify/notify";
+import {ToastContainer} from "react-toastify";
 
 type SignInProps = {};
 
@@ -14,6 +16,7 @@ const SignIn: React.FC<SignInProps> = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+
 
     const handleSignIn = () => {
         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -24,7 +27,7 @@ const SignIn: React.FC<SignInProps> = () => {
             router.push("/problems");
             console.log("User signed in:", user);
         }).catch((error) => {
-            alert("Invalid email or password");
+            notify("Email or Password is incorrect")
             const errorCode = error.code;
             const errorMessage = error.message;
             console.error("Error signing in:", errorCode, errorMessage);
@@ -56,10 +59,12 @@ const SignIn: React.FC<SignInProps> = () => {
                 >
                     Sign In
                 </button>
+                <ToastContainer/>
                 <p className="text-white mt-4"> Forgot your password? <button
                     className="text-blue-300 hover:text-blue-400"><Link href="/reset-password">Reset
                     Password</Link></button></p>
             </div>
+          
         </div>
     );
 }

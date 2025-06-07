@@ -31,7 +31,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
 
     const handleRun = async () => {
         if (testCases.length === 0) {
-            console.log('No test cases provided');
             return;
         }
 

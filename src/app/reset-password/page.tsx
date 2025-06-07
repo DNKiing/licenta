@@ -2,8 +2,9 @@
 import {useSendPasswordResetEmail} from 'react-firebase-hooks/auth';
 import React, {useState} from "react";
 import {auth} from "@/lib/firebase/firebase";
-import {Bounce, toast, ToastContainer} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import {useRouter} from "next/navigation";
+import notify from "@/components/Toastify/notify";
 
 type ResetPasswordProps = {}
 
@@ -13,13 +14,9 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
 
     const router = useRouter();
     const handleResetPassword = async () => {
-        const notify = (string: String) => toast(string, {
-            position: "top-center",
-            autoClose: 3000,
-            theme: "dark",
-        })
+
         if (!email) {
-            alert("Please enter your email address");
+            notify("Please enter your email address");
             return;
         }
         try {
@@ -30,7 +27,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
 
             console.log("Password reset email sent successfully:", res);
         } catch (error) {
-            console.error("Error sending password reset email:", error);
+
             notify("Failed to send password reset email. Please try again.");
         }
     }

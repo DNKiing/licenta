@@ -15,7 +15,7 @@ const Navbar = () => {
     const [user, setUser] = useState<User | null>(null);
     const [, setLoading] = useState(true);
 
-    // Listen to auth state changes
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setUser(user);
@@ -62,7 +62,7 @@ const Navbar = () => {
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation */}
+                    {/* Desktop */}
                     <div className="hidden md:flex items-center space-x-1">
 
                         <Link
